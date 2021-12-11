@@ -9,50 +9,7 @@ using namespace std;
 Felhasznalo sessionUser;
 bool belepve = false;
 
-int betoltKonyvek(KonyvLista& kl, const string& fajl)
-{
-    ifstream myFileStream(fajl);
 
-    if(!myFileStream.is_open())
-    {
-       cout << "Failed to open file" << endl;
-       return 0;
-    }
-    int id;
-    string cim;
-    int kiadas;
-    string iro;
-    string mufaj;
-    string tempString;
-    string line;
-    bool kolcsonozheto;
-    while(getline(myFileStream, line))
-    {
-        stringstream ss(line);
-        getline(ss,tempString,';');
-        id = stoi(tempString);
-        getline(ss,iro,';');
-        getline(ss,tempString,';');
-        kiadas = stoi(tempString);
-        getline(ss,cim,';');
-        getline(ss,mufaj,';');
-        getline(ss,tempString,';');
-        if(tempString == "1")
-        {
-            kolcsonozheto = true;
-        }
-        else{
-            kolcsonozheto = false;
-        }
-        Konyv book(id,cim,kiadas,iro,mufaj,kolcsonozheto);
-        kl.konyvLista.push_back(book);
-    }
-    kl.konyvLista.sort([](const Konyv& k1, const Konyv& k2){
-        return k1.getIro() < k2.getIro();
-    });
-    myFileStream.close();
-    return 1;
-}
 
 void bejelentkezes(FelhasznaloLista& fl)
 {
@@ -86,9 +43,78 @@ void bejelentkezes(FelhasznaloLista& fl)
 
 }
 
+void regisztracio(FelhasznaloLista& fl)
+{
+    int id;
+    string email;
+    string felh;
+    string jelszo;
+    string nev;
+    string szuldat;
+    string lakcim;
+    string telszam;
+    cout << "e-mail: ";
+    cin >> email;
+    cout << endl;
+    cout << "felhasznalonev: ";
+    cin >> felh;
+    cout << endl;
+    cout << "jelszo: ";
+    cin >> jelszo;
+    cout << endl;
+    cout << "nev: ";
+    cin.ignore();
+    getline(cin,nev);
+    cout << endl;
+    cout << "szuletesi datum (eeee-hh-nn): ";
+    cin >> szuldat;
+    cout << endl;
+    cout << "lakcim (varos): ";
+    cin >> lakcim;
+    cout << endl;
+    cout << "telszam: ";
+    cin >> telszam;
+    //kiszedjük a legutolsó id-t
+    ifstream myFileStream("felhasznalok.txt");
+    string line;
+    string tempString;
+    if(!myFileStream.is_open())
+    {
+       cout << "Failed to open file" << endl;
+       return;
+    }
+    else{
+        while(getline(myFileStream, line))
+        {
+            stringstream ss(line);
+            getline(ss,tempString,';');
+            id = stoi(tempString);
+        }
+    }
+    //megnöveljük egyel az id-t
+    id++;
+    cout << id;
+    Felhasznalo f1(id,felh,jelszo,email,nev,szuldat,lakcim,telszam);
+    //hozzáadjuk a felhasználót a listához
+    fl.felhasznalok.push_back(f1);
+    ofstream file;
+    //elmentjük a felhasználót fileba
+    file.open("felhasznalok.txt", std::ios_base::app);
+    file << f1.getId() << ";" << f1.getFnev() << ";" << f1.getJelszo() << ";" << f1.getEmail() <<
+            ";" << f1.getNev() << ";" << f1.getSzuldat() << ";" << f1.getLakcim() << ";" << f1.getLakcim() << '\n';
+
+
+    file.close();
+}
+
 void betoltFelhasznalok(FelhasznaloLista& fl)
 {
     fl.betoltFelhasznalok(fl,"felhasznalok.txt");
+}
+
+void betoltKonyvek(KonyvLista& kl)
+{
+    kl.betoltKonyvek(kl,"konyvek.txt");
 }
 
 void KonyvtarStart()
@@ -97,7 +123,7 @@ void KonyvtarStart()
     FelhasznaloLista felhasznalok;
     KonyvLista konyvek;
 
-    betoltKonyvek(konyvek,"konyvek.txt");
+    konyvek.betoltKonyvek(konyvek,"konyvek.txt");
     felhasznalok.betoltFelhasznalok(felhasznalok, "felhasznalok.txt");
 
 
@@ -109,7 +135,7 @@ void KonyvtarStart()
                 cout << "----------------------------------" << endl;
                 cout << "1: bejelentkezes" << endl;
                 cout << "2: regisztracio" << endl;
-                cout << "3: konyv keresese" << endl;
+                cout << "3: konyv kolcsonzese" << endl;
                 cout << "4: osszes konyv" << endl;
                 cout << "5: kolcsonozheto konyvek" << endl;
                 cout << "6: konyv keresese (cim szerint)" << endl;
@@ -128,11 +154,11 @@ void KonyvtarStart()
                     break;
 
                     case 2:
-                        cout << "regisztracio" << endl;
+                        regisztracio(felhasznalok);
                     break;
 
                     case 3:
-                        cout << "konyv keresese" << endl;
+                        cout << "konyv kolcsonzese" << endl;
                     break;
 
                     case 4:

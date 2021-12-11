@@ -50,10 +50,58 @@ void KonyvLista::keresKonyvetCim() const
     }
 }
 
+int KonyvLista::betoltKonyvek(KonyvLista &kl, const string &fajlnev)
+{
+    ifstream myFileStream(fajlnev);
+
+    if(!myFileStream.is_open())
+    {
+       cout << "Failed to open file" << endl;
+       return 0;
+    }
+    int id;
+    string cim;
+    int kiadas;
+    string iro;
+    string mufaj;
+    string tempString;
+    string line;
+    bool kolcsonozheto;
+    while(getline(myFileStream, line))
+    {
+        stringstream ss(line);
+        getline(ss,tempString,';');
+        id = stoi(tempString);
+        getline(ss,iro,';');
+        getline(ss,tempString,';');
+        kiadas = stoi(tempString);
+        getline(ss,cim,';');
+        getline(ss,mufaj,';');
+        getline(ss,tempString,';');
+        if(tempString == "1")
+        {
+            kolcsonozheto = true;
+        }
+        else{
+            kolcsonozheto = false;
+        }
+        Konyv book(id,cim,kiadas,iro,mufaj,kolcsonozheto);
+        kl.konyvLista.push_back(book);
+    }
+    kl.konyvLista.sort([](const Konyv& k1, const Konyv& k2){
+        return k1.getIro() < k2.getIro();
+    });
+    myFileStream.close();
+    return 1;
+
+}
+
 list<Konyv> KonyvLista::getKonyvLista() const
 {
     return konyvLista;
 }
+
+
 
 KonyvLista::KonyvLista()
 {

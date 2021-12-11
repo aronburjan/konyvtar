@@ -4,6 +4,9 @@
 #include <list>
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <sstream>
+#include <string>
 using namespace std;
 
 class KonyvLista
@@ -26,6 +29,7 @@ public:
     void printOsszesKonyv() const;
     void printKolcsonozhetoKonyvek() const;
     void keresKonyvetCim() const;
+    int betoltKonyvek(KonyvLista& kl, const string& fajlnev);
     list<Konyv> getKonyvLista() const;
 };
 
