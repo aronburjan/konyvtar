@@ -10,6 +10,20 @@ void FelhasznaloLista::setDarab(int value)
     darab = value;
 }
 
+void FelhasznaloLista::letrehozFelhasznalokFile(FelhasznaloLista &fl, const string &filename)
+{
+    //létrehozzuk a felhasználó filet a build konyvtárba egy default első értékkel, ami az admin
+    ofstream file;
+    //elmentjük a felhasználót fileba
+    Felhasznalo admin(1,"admin","admin","admin@admin.com","Admin Nev","1998-03-12","Veszprem","062342323");
+    file.open("felhasznalok.txt");
+    file << 1 << ";" << "admin" << ";" << "admin" << ";" << "admin@admin.com" <<
+            ";" << "Admin Nev" << ";" << "1998-03-12" << ";" << "Veszprem" << ";" << "06234232342" << '\n';
+
+    fl.felhasznalok.push_back(admin);
+    file.close();
+}
+
 int FelhasznaloLista::betoltFelhasznalok(FelhasznaloLista& fl, const string &filename)
 {
     ifstream myFileStream(filename);
@@ -45,6 +59,7 @@ int FelhasznaloLista::betoltFelhasznalok(FelhasznaloLista& fl, const string &fil
         fl.felhasznalok.push_back(user);
     }
 }
+
 
 void FelhasznaloLista::listaz() const
 {

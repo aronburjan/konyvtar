@@ -47,6 +47,11 @@ void Konyv::printKonyv() const
     }
 }
 
+void Konyv::setKolcsonozheto(bool value)
+{
+    kolcsonozheto = value;
+}
+
 Konyv::Konyv(int id, const string &iro, int kiadas, const string &cim, const string &mufaj, bool kolcsonozheto):
     id(id),
     iro(iro),

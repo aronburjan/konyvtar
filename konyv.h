@@ -26,6 +26,7 @@ public:
     bool getKolcsonozheto() const;
     list<string> getHozzaszolasok() const;
     void printKonyv() const;
+    void setKolcsonozheto(bool value);
 };
 
 #endif // KONYV_H

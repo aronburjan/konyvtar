@@ -18,6 +18,7 @@ public:
 
     int getDarab() const;
     void setDarab(int value);
+    void letrehozFelhasznalokFile(FelhasznaloLista& fl, const string& filename);
     int betoltFelhasznalok(FelhasznaloLista& fl,const string& filename);
     void listaz() const;
     int checkLogin(const string& felh, const string& jelszo) const;

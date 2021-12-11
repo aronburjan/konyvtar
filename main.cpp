@@ -78,6 +78,8 @@ void regisztracio(FelhasznaloLista& fl)
     ifstream myFileStream("felhasznalok.txt");
     string line;
     string tempString;
+    string checkFelh;
+    string checkEmail;
     if(!myFileStream.is_open())
     {
        cout << "Failed to open file" << endl;
@@ -89,6 +91,21 @@ void regisztracio(FelhasznaloLista& fl)
             stringstream ss(line);
             getline(ss,tempString,';');
             id = stoi(tempString);
+            getline(ss,checkFelh,';');
+            getline(ss,tempString,';');
+            getline(ss,checkEmail,';');
+            if(checkEmail == email)
+            {
+                cout << "Ehhez az e-mail cimhez mar tartozik felhasznalo. Probalkozzon ujra!" << endl;
+                return;
+            }
+            if(checkFelh == felh)
+            {
+                cout << "Felhasznalonev mar foglalt. Probalkozzon ujra!" << endl;
+                return;
+            }
+
+
         }
     }
     //megnöveljük egyel az id-t
@@ -101,7 +118,7 @@ void regisztracio(FelhasznaloLista& fl)
     //elmentjük a felhasználót fileba
     file.open("felhasznalok.txt", std::ios_base::app);
     file << f1.getId() << ";" << f1.getFnev() << ";" << f1.getJelszo() << ";" << f1.getEmail() <<
-            ";" << f1.getNev() << ";" << f1.getSzuldat() << ";" << f1.getLakcim() << ";" << f1.getLakcim() << '\n';
+            ";" << f1.getNev() << ";" << f1.getSzuldat() << ";" << f1.getLakcim() << ";" << f1.getTelszam() << '\n';
 
 
     file.close();
@@ -122,7 +139,7 @@ void KonyvtarStart()
     cout << "Udvozoljuk a konyvtar alkalmazasban!" << endl;
     FelhasznaloLista felhasznalok;
     KonyvLista konyvek;
-
+    //felhasznalok.letrehozFelhasznalokFile(felhasznalok,"felhasznalok.txt"); csak legeloszor kell lefuttatni
     konyvek.betoltKonyvek(konyvek,"konyvek.txt");
     felhasznalok.betoltFelhasznalok(felhasznalok, "felhasznalok.txt");
 
@@ -190,6 +207,7 @@ void KonyvtarStart()
                 cout << "5: kolcsonozheto konyvek" << endl;
                 cout << "6: konyv keresese (cim szerint)" << endl;
                 cout << "7: kolcsonzes" << endl;
+                cout << "8: olvasojegy keszitese" << endl;
                 cout << "0: kilepes" << endl;
                 cout << "Valasszon egy menupontot: ";
                 cin >> valasztas;
@@ -216,6 +234,9 @@ void KonyvtarStart()
                     break;
                     case 7:
                         cout << "Kolcsonzes" << endl;
+                    break;
+                    case 8:
+                        sessionUser.keszitOlvasojegyet();
                     break;
 
                     default:

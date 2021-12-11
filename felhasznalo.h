@@ -3,6 +3,10 @@
 #include <iostream>
 #include "konyv.h"
 #include <list>
+#include "olvasojegy.h"
+#include <chrono>
+#include<windows.h>
+
 using namespace std;
 
 class Felhasznalo
@@ -12,6 +16,9 @@ class Felhasznalo
     bool regisztralt;
     bool vanOlvasojegy;
     list<Konyv> kolcsonzottKonyvek;
+
+    Olvasojegy oj;
+
 public:
     Felhasznalo(int id, string fnev, string jelszo, string email, string nev, string szuldat, string lakcim, string telszam);
     Felhasznalo()=default;
@@ -33,6 +40,10 @@ public:
     void setRegisztralt(bool value);
     bool getVanOlvasojegy() const;
     void setVanOlvasojegy(bool value);
+    string getTelszam() const;
+    void setTelszam(const string &value);
+    Olvasojegy getOj() const;
+    void keszitOlvasojegyet();
 };
 
 #endif // FELHASZNALO_H

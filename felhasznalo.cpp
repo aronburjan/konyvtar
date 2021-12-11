@@ -90,6 +90,63 @@ void Felhasznalo::setVanOlvasojegy(bool value)
     vanOlvasojegy = value;
 }
 
+string Felhasznalo::getTelszam() const
+{
+    return telszam;
+}
+
+void Felhasznalo::setTelszam(const string &value)
+{
+    telszam = value;
+}
+
+Olvasojegy Felhasznalo::getOj() const
+{
+    return oj;
+}
+
+
+
+void Felhasznalo::keszitOlvasojegyet()
+{
+    if(!vanOlvasojegy){
+    string valasz;
+    cout << "Az olvasojegy ara: 2000 Ft." << endl;
+    cout << "Megvasarolja a jegyet? (y/n) " << endl;
+    cin >> valasz;
+    if(valasz == "y")
+    {
+        string bankszamlaszam, lejarati, ccv;
+        cout << "Bankszamlaszam: ";
+        cin >> bankszamlaszam;
+        cout << endl;
+        cout << "Lejarati datum: ";
+        cin >> lejarati;
+        cout << endl;
+        cout << "CCV kod: ";
+        cin >> ccv;
+        cout << endl;
+        Sleep(2000);
+        cout << "A tranzakcio sikeres volt!" << endl;
+        Olvasojegy o1(id,chrono::system_clock::now(),true);
+        time_t end_t =chrono::system_clock::to_time_t(o1.getLejar());
+        cout << "Olvasojegyet " << ctime(&end_t) << " -ig hasznalhatja." << endl;
+         oj = o1;
+         setVanOlvasojegy(true);
+         return;
+    }
+    cout << "A tranzakciot megszakitottuk." << endl;
+    return;
+    }
+    else{
+        cout << "Mar rendelkezik olvasojeggyel." << endl;
+        return;
+    }
+
+
+
+}
+
 Felhasznalo::Felhasznalo(int id, string fnev, string jelszo, string email, string nev, string szuldat, string lakcim, string telszam):
     id(id),
     fnev(fnev),

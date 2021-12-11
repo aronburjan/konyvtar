@@ -9,11 +9,13 @@ SOURCES += \
         hozzaszolas.cpp \
         konyv.cpp \
         konyvlista.cpp \
-        main.cpp
+        main.cpp \
+        olvasojegy.cpp
 
 HEADERS += \
     felhasznalo.h \
     felhasznalolista.h \
     hozzaszolas.h \
     konyv.h \
-    konyvlista.h
+    konyvlista.h \
+    olvasojegy.h
