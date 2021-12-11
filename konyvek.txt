@@ -1,0 +1,20 @@
+1;Isteni szinjatek;1472;Dante Alighieri;drama;1
+2;Tartuffe;1664;Moliere;komedia;1
+3;Gulliver Utazasai;1726;Jonathan Swift;kaland;1
+4;A Per;1925;Franz Kafka;abszurd;1
+5;1984;1948;George Orwell;scifi;1
+6;A Gyuru Szovetsege;1954;J.R.R. Tolkien;kaland;1
+7;A Ket Torony;1954;J.R.R. Tolkien;kaland;1
+8;A Kiraly Visszater;1955;J.R.R. Tolkien;kaland;0
+9;Az Atvaltozas;1915;Franz Kafka;abszurd;1
+10;A Dune;1965;Frank Herbert;scifi;1
+11;Bun es Bunhodes;1866;Fjodor Dosztojevszkij;drama;1
+12;Pal utcai fiuk;1906;Molnar Ferenc;ifjusagi;1
+13;Edes Anna;1926;Kosztolanyi Dezso;drama;1
+14;Az Ember Tragediaja;1861;Madach Imre;drama;1
+15;Faust;1790;Goethe;drama;1
+16;Az Ember Akit Ovenak Hivnak;2012;Frederik Backman;komedia;0
+17;Az Alapitvany;1951;Isaac Asimov;scifi;1
+18;Esti Kornel;1933;Kosztolanyi Dezso;drama;1
+19;Tronok Harca;1996;George R. R. Martin;drama;1
+20;Kiralyok csataja;1998;George R. R. Martin;drama;1

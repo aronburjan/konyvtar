@@ -1,0 +1,2 @@
+1;felh;jelszo;email;nev;szuldat;lakcim;06326794
+2;felh2;password;email@email.com;Nev Nev;2003;veszprem;0632374347
