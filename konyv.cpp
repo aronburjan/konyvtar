@@ -52,6 +52,28 @@ void Konyv::setKolcsonozheto(bool value)
     kolcsonozheto = value;
 }
 
+void Konyv::printHozzaszolasok()
+{
+    for(auto it:hozzaszolasok)
+    {
+        cout << "Hozzaszolas: " << it << endl;
+    }
+}
+
+void Konyv::hozzadKomment()
+{
+    string komment;
+    cout << "Irja meg a hozzaszolast: ";
+    cin.ignore();
+    getline(cin,komment);
+    this->hozzaszolasok.push_back(komment);
+}
+
+Konyv::Konyv()
+{
+
+}
+
 Konyv::Konyv(int id, const string &iro, int kiadas, const string &cim, const string &mufaj, bool kolcsonozheto):
     id(id),
     iro(iro),

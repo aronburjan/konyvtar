@@ -31,6 +31,10 @@ public:
     void keresKonyvetCim() const;
     int betoltKonyvek(KonyvLista& kl, const string& fajlnev);
     list<Konyv> getKonyvLista() const;
+    void DBupdate(const string& filename);
+    void kikolcsonoz();
+    void hozzaSzolas();
+
 };
 
 #endif // KONYVLISTA_H

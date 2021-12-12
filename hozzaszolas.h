@@ -2,7 +2,6 @@
 #define HOZZASZOLAS_H
 #include <iostream>
 using namespace std;
-#include "konyv.h"
 
 class Hozzaszolas
 {

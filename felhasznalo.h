@@ -6,7 +6,6 @@
 #include "olvasojegy.h"
 #include <chrono>
 #include<windows.h>
-
 using namespace std;
 
 class Felhasznalo
@@ -20,8 +19,9 @@ class Felhasznalo
     Olvasojegy oj;
 
 public:
-    Felhasznalo(int id, string fnev, string jelszo, string email, string nev, string szuldat, string lakcim, string telszam);
-    Felhasznalo()=default;
+    Felhasznalo(int id, string fnev, string jelszo, string email, string nev, string szuldat, string lakcim, string telszam, bool vanolvasojegy);
+
+
     string getEmail() const;
     void setEmail(const string &value);
     string getNev() const;
@@ -43,7 +43,9 @@ public:
     string getTelszam() const;
     void setTelszam(const string &value);
     Olvasojegy getOj() const;
-    void keszitOlvasojegyet();
+    bool operator == (const Felhasznalo &f1);
+
+    void setOj(const Olvasojegy &value);
 };
 
 #endif // FELHASZNALO_H

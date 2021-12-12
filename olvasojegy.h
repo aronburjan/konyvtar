@@ -2,6 +2,7 @@
 #define OLVASOJEGY_H
 #include "konyv.h"
 #include <chrono>
+#include "konyvlista.h"
 class Olvasojegy
 {
     int id;
@@ -15,7 +16,7 @@ public:
     chrono::system_clock::time_point getKeszult() const;
     chrono::system_clock::time_point getLejar() const;
     bool getAktiv() const;
-    void kolcsonzes(Konyv &k1);
+    void kolcsonzes(KonyvLista kl, Konyv &k1);
 };
 
 #endif // OLVASOJEGY_H

@@ -6,18 +6,15 @@
 #include "konyvlista.h"
 using namespace std;
 
-Felhasznalo sessionUser;
+Felhasznalo sessionUser(0,"0","0","0","0","0","0","0","0");
+FelhasznaloLista felhasznalok;
+KonyvLista konyvek;
 bool belepve = false;
 
 
 
 void bejelentkezes(FelhasznaloLista& fl)
 {
-    Felhasznalo loginUser;
-    for(auto it:fl.felhasznalok)
-    {
-        cout << it.getNev() << endl;
-    }
     string felhasznalonev;
     string jelszo;
     cout << "felhasznalonev: ";
@@ -32,8 +29,9 @@ void bejelentkezes(FelhasznaloLista& fl)
             if(loginid == it.getId())
             {
                 belepve = true;
-                loginUser = it;
+                sessionUser = it;
                 cout << "Sikeres bejelentkezes!" << endl;
+
                 return;
             }
         }
@@ -111,17 +109,49 @@ void regisztracio(FelhasznaloLista& fl)
     //megnöveljük egyel az id-t
     id++;
     cout << id;
-    Felhasznalo f1(id,felh,jelszo,email,nev,szuldat,lakcim,telszam);
+    Felhasznalo f1(id,felh,jelszo,email,nev,szuldat,lakcim,telszam,false);
     //hozzáadjuk a felhasználót a listához
     fl.felhasznalok.push_back(f1);
     ofstream file;
     //elmentjük a felhasználót fileba
     file.open("felhasznalok.txt", std::ios_base::app);
+
     file << f1.getId() << ";" << f1.getFnev() << ";" << f1.getJelszo() << ";" << f1.getEmail() <<
-            ";" << f1.getNev() << ";" << f1.getSzuldat() << ";" << f1.getLakcim() << ";" << f1.getTelszam() << '\n';
+            ";" << f1.getNev() << ";" << f1.getSzuldat() << ";" << f1.getLakcim() << ";" << f1.getTelszam()  << ";" << "0" << '\n';
 
 
     file.close();
+}
+
+void kikolcsonzes()
+{
+    if(sessionUser.getVanOlvasojegy()){
+    string cim;
+    Konyv k1;
+    cout << "Konyv cime: " << endl;
+    cin.ignore();
+    getline(cin,cim);
+    bool talalat = false;
+    for(auto it:konyvek.konyvLista)
+    {
+        if(it.getCim() == cim)
+        {
+            k1=it;
+            sessionUser.getOj().kolcsonzes(konyvek,k1);
+            talalat = true;
+        }
+    }
+    if(talalat == false)
+    {
+        cout << "A kikolcsonozni kivant konyvet nem talaltuk meg." << endl;
+        return;
+    }
+    }
+    else{
+        cout << "A kolcsonzeshez olvasojegy szukseges." << endl;
+    }
+
+
 }
 
 void betoltFelhasznalok(FelhasznaloLista& fl)
@@ -137,9 +167,8 @@ void betoltKonyvek(KonyvLista& kl)
 void KonyvtarStart()
 {
     cout << "Udvozoljuk a konyvtar alkalmazasban!" << endl;
-    FelhasznaloLista felhasznalok;
-    KonyvLista konyvek;
-    //felhasznalok.letrehozFelhasznalokFile(felhasznalok,"felhasznalok.txt"); csak legeloszor kell lefuttatni
+
+    //felhasznalok.letrehozFelhasznalokFile(felhasznalok,"felhasznalok.txt"); //csak legeloszor kell lefuttatni
     konyvek.betoltKonyvek(konyvek,"konyvek.txt");
     felhasznalok.betoltFelhasznalok(felhasznalok, "felhasznalok.txt");
 
@@ -152,7 +181,6 @@ void KonyvtarStart()
                 cout << "----------------------------------" << endl;
                 cout << "1: bejelentkezes" << endl;
                 cout << "2: regisztracio" << endl;
-                cout << "3: konyv kolcsonzese" << endl;
                 cout << "4: osszes konyv" << endl;
                 cout << "5: kolcsonozheto konyvek" << endl;
                 cout << "6: konyv keresese (cim szerint)" << endl;
@@ -172,10 +200,6 @@ void KonyvtarStart()
 
                     case 2:
                         regisztracio(felhasznalok);
-                    break;
-
-                    case 3:
-                        cout << "konyv kolcsonzese" << endl;
                     break;
 
                     case 4:
@@ -208,6 +232,7 @@ void KonyvtarStart()
                 cout << "6: konyv keresese (cim szerint)" << endl;
                 cout << "7: kolcsonzes" << endl;
                 cout << "8: olvasojegy keszitese" << endl;
+                cout << "9: hozzaszolas" << endl;
                 cout << "0: kilepes" << endl;
                 cout << "Valasszon egy menupontot: ";
                 cin >> valasztas;
@@ -233,11 +258,15 @@ void KonyvtarStart()
                         konyvek.keresKonyvetCim();
                     break;
                     case 7:
-                        cout << "Kolcsonzes" << endl;
+                        kikolcsonzes();
                     break;
                     case 8:
-                        sessionUser.keszitOlvasojegyet();
+                        felhasznalok.keszitOlvasojegyet(felhasznalok.felhasznalok,sessionUser);
                     break;
+                    case 9:
+                        konyvek.hozzaSzolas();
+                    break;
+
 
                     default:
                         cout << "nem ervenyes menupont!" << endl;

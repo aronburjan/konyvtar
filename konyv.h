@@ -17,6 +17,7 @@ class Konyv
     list<string> hozzaszolasok;
 
 public:
+    Konyv();
     Konyv(int id, const string& cim, int kiadas, const string& iro, const string& mufaj, bool kolcsonozheto);
     int getId() const;
     string getIro() const;
@@ -27,6 +28,8 @@ public:
     list<string> getHozzaszolasok() const;
     void printKonyv() const;
     void setKolcsonozheto(bool value);
+    void printHozzaszolasok();
+    void hozzadKomment();
 };
 
 #endif // KONYV_H

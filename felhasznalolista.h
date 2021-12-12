@@ -22,6 +22,8 @@ public:
     int betoltFelhasznalok(FelhasznaloLista& fl,const string& filename);
     void listaz() const;
     int checkLogin(const string& felh, const string& jelszo) const;
+    void DBupdate(const string& filename);
+    void keszitOlvasojegyet(list<Felhasznalo> &l1, Felhasznalo& f1);
 };
 
 #endif // FELHASZNALOLISTA_H

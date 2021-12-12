@@ -105,49 +105,24 @@ Olvasojegy Felhasznalo::getOj() const
     return oj;
 }
 
-
-
-void Felhasznalo::keszitOlvasojegyet()
+bool Felhasznalo::operator ==(const Felhasznalo &f1)
 {
-    if(!vanOlvasojegy){
-    string valasz;
-    cout << "Az olvasojegy ara: 2000 Ft." << endl;
-    cout << "Megvasarolja a jegyet? (y/n) " << endl;
-    cin >> valasz;
-    if(valasz == "y")
+    if(this->getId() == f1.getId() && this->getFnev() == f1.getFnev() && this->getJelszo() == f1.getJelszo())
     {
-        string bankszamlaszam, lejarati, ccv;
-        cout << "Bankszamlaszam: ";
-        cin >> bankszamlaszam;
-        cout << endl;
-        cout << "Lejarati datum: ";
-        cin >> lejarati;
-        cout << endl;
-        cout << "CCV kod: ";
-        cin >> ccv;
-        cout << endl;
-        Sleep(2000);
-        cout << "A tranzakcio sikeres volt!" << endl;
-        Olvasojegy o1(id,chrono::system_clock::now(),true);
-        time_t end_t =chrono::system_clock::to_time_t(o1.getLejar());
-        cout << "Olvasojegyet " << ctime(&end_t) << " -ig hasznalhatja." << endl;
-         oj = o1;
-         setVanOlvasojegy(true);
-         return;
+        return true;
     }
-    cout << "A tranzakciot megszakitottuk." << endl;
-    return;
-    }
-    else{
-        cout << "Mar rendelkezik olvasojeggyel." << endl;
-        return;
-    }
-
-
-
+    return false;
 }
 
-Felhasznalo::Felhasznalo(int id, string fnev, string jelszo, string email, string nev, string szuldat, string lakcim, string telszam):
+
+
+
+void Felhasznalo::setOj(const Olvasojegy &value)
+{
+    oj = value;
+}
+
+Felhasznalo::Felhasznalo(int id, string fnev, string jelszo, string email, string nev, string szuldat, string lakcim, string telszam, bool vanolvasojegy):
     id(id),
     fnev(fnev),
     jelszo(jelszo),
@@ -155,7 +130,8 @@ Felhasznalo::Felhasznalo(int id, string fnev, string jelszo, string email, strin
     nev(nev),
     szuldat(szuldat),
     lakcim(lakcim),
-    telszam(telszam)
+    telszam(telszam),
+    vanOlvasojegy(vanolvasojegy)
 {
 
 }

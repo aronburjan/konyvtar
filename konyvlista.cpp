@@ -12,10 +12,54 @@ void KonyvLista::setDarab(int value)
 
 void KonyvLista::printOsszesKonyv() const
 {
-    for(auto it:konyvLista)
+    unsigned valasz;
+    cout << "Szures:" << endl;
+    cout << "1: szerzo" << endl;
+    cout << "2: mufaj" << endl;
+    cout << "0: osszes" << endl;
+    cout << "Valasszon a feltetlek kozul: ";
+    cin >> valasz;
+    switch (valasz)
     {
-        it.printKonyv();
+        case 1:{
+            string szerzo;
+            cout << "Szerzo neve: ";
+            cin.ignore();
+            getline(cin,szerzo);
+            for(auto it:konyvLista)
+            {
+                if(it.getIro()==szerzo)
+                {
+                    it.printKonyv();
+                }
+            }
+        break;
+        }
+
+        case 2:{
+            string mufaj;
+            cout << "Mufaj megnevezese: ";
+            cin.ignore();
+            getline(cin,mufaj);
+
+            for(auto it:konyvLista)
+            {
+                if(it.getMufaj()==mufaj)
+                {
+                    it.printKonyv();
+                }
+            }
+        break;
+        }
+        case 0:{
+        for(auto it:konyvLista)
+        {
+            it.printKonyv();
+        }
+        break;
+        }
     }
+
 }
 
 void KonyvLista::printKolcsonozhetoKonyvek() const
@@ -28,6 +72,7 @@ void KonyvLista::printKolcsonozhetoKonyvek() const
         }
     }
 }
+
 
 void KonyvLista::keresKonyvetCim() const
 {
@@ -42,6 +87,8 @@ void KonyvLista::keresKonyvetCim() const
         {
             megvan = true;
             it.printKonyv();
+            it.printHozzaszolasok();
+
         }
     }
     if(!megvan)
@@ -99,6 +146,52 @@ int KonyvLista::betoltKonyvek(KonyvLista &kl, const string &fajlnev)
 list<Konyv> KonyvLista::getKonyvLista() const
 {
     return konyvLista;
+}
+
+void KonyvLista::DBupdate(const string &filename)
+{
+    ofstream file;
+    file.open(filename);
+    for(auto it:konyvLista)
+    {
+        file << it.getId() << ";" << it.getCim() << ";" << it.getKiadas() << ";" << it.getIro() << ";" << it.getMufaj() << ";";
+        if(it.getKolcsonozheto())
+            file << "1" << '\n';
+        else
+            file << "0" << '\n';
+    }
+    file.close();
+
+}
+
+void KonyvLista::kikolcsonoz()
+{
+
+}
+
+void KonyvLista::hozzaSzolas()
+{
+    string cim;
+    cout << "Irja be a konyv cimet amelyhez hozzaszolast szeretne fuzni: ";
+    cin.ignore();
+    getline(cin,cim);
+    bool megvan = false;
+    for(auto it:konyvLista)
+    {
+        if(it.getCim() == cim)
+        {
+            megvan = true;
+            string hozzaszolas;
+            cout << "Hozzaszolas a(z) " << cim << " cimu konyvhoz: ";
+            it.hozzadKomment();
+        }
+    }
+    if(!megvan)
+    {
+        cout << "A keresett konyv nem talalhato." << endl;
+    }
+
+
 }
 
 

@@ -17,12 +17,20 @@ bool Olvasojegy::getAktiv() const
     return aktiv;
 }
 
-void Olvasojegy::kolcsonzes(Konyv &k1)
+void Olvasojegy::kolcsonzes(KonyvLista kl, Konyv &k1)
 {
     if(k1.getKolcsonozheto())
     {
         kikolcsonzottKonyvek.push_back(k1);
-        k1.setKolcsonozheto(false);
+        for(auto &it:kl.konyvLista)
+        {
+            if(it.getCim() == k1.getCim())
+                it.setKolcsonozheto(false);
+
+        }
+        kl.DBupdate("konyvek.txt");
+
+        cout << "Sikeres kolcsonzes!" << endl;
     }
     else{
         cout << "A konyv jelenleg nem elerheto." << endl;
